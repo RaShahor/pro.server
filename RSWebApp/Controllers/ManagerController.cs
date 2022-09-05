@@ -59,16 +59,16 @@ namespace RSWebApp.Controllers
 
         return await MDL.getAllFormsToSignerByUserIdAndSignerId(idu, ids);
     }
-    [HttpGet("{id}/Signer")]
+    [HttpGet("{id}/Signers")]
     public async Task<List<Signer>> GetSigners(int id)//קבלת כל הלקוחות של המשתמש
     {
 
         return await MDL.getAllSignersByUser(id);
     }
     [HttpPost("{id}")]
-    public async Task PostNewSigner( [FromBody] Signer signerDTO,int UId)//שמירת לקוח חדש למשתמש - שימוש ב: מיפוי dto
+    public async Task PostNewSigner( int id,[FromBody] Signer signerDTO)//שמירת לקוח חדש למשתמש - שימוש ב: מיפוי dto
     {
-        await MBL.NewSigner(signerDTO, UId);
+        await MBL.NewSigner(signerDTO,id);
     }
     [HttpPost("{Sid}/{cls}/{status}/{order}")]//שמירת טופס חדש ללקוח
     public async Task<FormToSigner> PostNewFormToSigner([FromBody] FormUser form, int SId, int cls, int status, int order)
@@ -87,29 +87,29 @@ namespace RSWebApp.Controllers
 
 
 
-    //DELETE api/<SecretaryController>/5
-        [HttpDelete("{id}/Signer")]
-    public void DeleteSigner(int id)//מחיקת לקוח תחת משתמש! מספיק רק זיהוי של לקוח? או נדרש גם זיהוי משתמש
-    {
-        MDL.DeleteSigner(id);
-    }
-    [HttpDelete("{id}/User")]
-    public void DeleteUser(int id)//איפה למקם פונקציית הסרת לקוח אם בכלל???
-    {
-        MBL.DeleteUser(id);
-    }
+    ////DELETE api/<SecretaryController>/5
+    //    [HttpDelete("{id}/Signer")]
+    //public void DeleteSigner(int id)//מחיקת לקוח תחת משתמש! מספיק רק זיהוי של לקוח? או נדרש גם זיהוי משתמש
+    //{
+    //    MDL.DeleteSigner(id);
+    //}
+    //[HttpDelete("{id}/User")]
+    //public void DeleteUser(int id)//איפה למקם פונקציית הסרת לקוח אם בכלל???
+    //{
+    //    MBL.DeleteUser(id);
+    //}
 
 
    
-    [HttpDelete("{id}/formsToSigner-range")]
-        public void DeleteformsToSigner_range(int id, DateTime date)
-    {
-        MBL.DeleteformsToSigner_range(id, date);
-    }
-    [HttpDelete("{id}/{tillDate}/formsToUser-range")]
-    public void DeleteformsToUser_range(int id, DateTime date)
-    {
-        MBL.DeleteformsToUser_range(id, date);
-    }
+    //[HttpDelete("{id}/formsToSigner-range")]
+    //    public void DeleteformsToSigner_range(int id, DateTime date)
+    //{
+    //    MBL.DeleteformsToSigner_range(id, date);
+    //}
+    //[HttpDelete("{id}/{tillDate}/formsToUser-range")]
+    //public void DeleteformsToUser_range(int id, DateTime date)
+    //{
+    //    MBL.DeleteformsToUser_range(id, date);
+    //}
 }
 }

@@ -19,7 +19,34 @@ namespace Entities
         public int? OfficeId { get; set; }
         [JsonIgnore]
         public virtual Office Office { get; set; }
-        [JsonIgnore]
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         public virtual Person Person { get; set; }
         [JsonIgnore]
         public virtual ICollection<FormUser> FormUsers { get; set; }

@@ -9,6 +9,8 @@ namespace DAL
 {
     public interface ISignerDl
     {
-        public Task<bool> sendMail(int ftsId, Office office, int signer);
+        //public Task<bool> sendMail(int ftsId, Office office, int signer);
+        Task<Signer> getSignerById(int signer);
+        Task<Person> getPersonById(int personId);
     }
 }

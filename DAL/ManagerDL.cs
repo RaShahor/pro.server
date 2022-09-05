@@ -15,10 +15,10 @@ namespace DAL
     {
         SignContext myContext;
        
-        ILogger logger;
+        ILogger<ManagerDL> logger;
 
 
-        public ManagerDL( SignContext myC)
+        public ManagerDL( SignContext myC,ILogger<ManagerDL> logger)
         { 
             myContext = myC;
            
@@ -113,7 +113,7 @@ namespace DAL
         {
 
             var SIGNERS = myContext.Signers
-                        .Where(x => x.UserId == id)
+                        .Where(x => x.UserId == id).Include(s=>s.Person)
                         .ToList();
             return SIGNERS;
 

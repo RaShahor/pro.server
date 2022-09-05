@@ -30,7 +30,7 @@ namespace RSWebApp.Controllers
         // GET api/<SecretaryController>/5
         [HttpPost("{mail}/{password}")]
 
-        public async Task<ActionResult<User>> Get(string mail, string password)
+        public async Task<ActionResult<User>> logIn(string mail, string password)
         {
 
             User u = await logBL.postUser(mail, password);
@@ -43,13 +43,13 @@ namespace RSWebApp.Controllers
         // POST: HomeController/Edit/5
         [HttpPost]
         // [ValidateAntiForgeryToken]
-        public async Task<User> Post([FromBody] User user)
+        public async Task<User> newUser([FromBody] User user)
         {
             return await logBL.postUser(user);
         }
 
         [HttpPut("{mail}")]
-        public async Task Put(string mail, [FromBody] User curUser)
+        public async Task updateMail(string mail, [FromBody] User curUser)
         {
 
             logBL.putUser(mail, curUser);
