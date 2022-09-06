@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
 #nullable disable
 
@@ -18,9 +17,9 @@ namespace Entities
         public string Name { get; set; }
         public string Address { get; set; }
         public decimal? Fee { get; set; }
-        [JsonIgnore]
+        public byte[] Logo { get; set; }
+
         public virtual ICollection<Class> Classes { get; set; }
-        [JsonIgnore]
         public virtual ICollection<User> Users { get; set; }
     }
 }

@@ -35,7 +35,7 @@ namespace DAL
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                //optionsBuilder.UseSqlServer(MyPc);
+                optionsBuilder.UseSqlServer("Server=DESKTOP-R5RADSP;Database=Sign;Trusted_Connection=True;");
             }
         }
 
@@ -135,11 +135,13 @@ namespace DAL
 
                 entity.Property(e => e.Class).HasColumnName("class");
 
+                entity.Property(e => e.CommonId).HasColumnName("common_id");
+
                 entity.Property(e => e.FormId).HasColumnName("form_id");
 
                 entity.Property(e => e.Order).HasColumnName("order");
 
-                entity.Property(e => e.SignerId).HasColumnName("Signer_id");
+                entity.Property(e => e.SignerId).HasColumnName("signer_id");
 
                 entity.Property(e => e.Status).HasColumnName("status");
 
@@ -208,6 +210,10 @@ namespace DAL
                 entity.Property(e => e.Fee)
                     .HasColumnType("money")
                     .HasColumnName("fee");
+
+                entity.Property(e => e.Logo)
+                    .HasColumnType("image")
+                    .HasColumnName("logo");
 
                 entity.Property(e => e.Name)
                     .HasMaxLength(50)
@@ -322,6 +328,10 @@ namespace DAL
                 entity.ToTable("Signer");
 
                 entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.PassTime)
+                    .HasColumnType("datetime")
+                    .HasColumnName("pass_time");
 
                 entity.Property(e => e.PersonId).HasColumnName("person_id");
 

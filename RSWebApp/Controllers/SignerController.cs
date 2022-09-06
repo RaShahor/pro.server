@@ -23,12 +23,12 @@ namespace RSWebApp.Controllers
         {
             _signerBL = sbl;
         }
-        //// GET: api/<SignerController>
-        //[HttpGet]
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
+        // GET: api/<SignerController>
+        [HttpGet("{mail}")]
+        public string GetPWD(string mail)
+        {
+            return _signerBL.getPassword(mail);
+        }
 
         //// GET api/<SignerController>/5
         //[HttpGet("{id}")]

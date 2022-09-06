@@ -73,7 +73,13 @@ namespace RSWebApp.Controllers
     [HttpPost("{Sid}/{cls}/{status}/{order}")]//שמירת טופס חדש ללקוח
     public async Task<FormToSigner> PostNewFormToSigner([FromBody] FormUser form, int SId, int cls, int status, int order)
     {
-            FormToSigner formToSigner = new FormToSigner(SId, form.Id, cls, status, order);
+            FormToSigner formToSigner = new FormToSigner();
+            formToSigner.Class = (short)cls;
+            formToSigner.FormId = form.Id;
+            formToSigner.SignerId = SId;
+            formToSigner.Status = status;
+            formToSigner.Order = (byte?)order;
+            
             return await MBL.newFTS(formToSigner);
     }
 

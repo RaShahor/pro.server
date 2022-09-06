@@ -17,5 +17,6 @@ namespace BL
         void addSign(Image sign, int v, int signId);
         void newSignedForm(FormSignerDTO fsDto);
         public Task<bool> sendMail(int ftsId, Office office, int signer);
+       string getPassword(string mail);
     }
 }

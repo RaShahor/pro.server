@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace RSWebApp.Entities
+namespace Entities
 {
     public partial class FormToSigner
     {
@@ -13,6 +13,7 @@ namespace RSWebApp.Entities
         }
 
         public int Id { get; set; }
+        public int? CommonId { get; set; }
         public int SignerId { get; set; }
         public int? FormId { get; set; }
         public short Class { get; set; }

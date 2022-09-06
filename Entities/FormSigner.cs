@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
 #nullable disable
 
@@ -15,9 +14,8 @@ namespace Entities
         public DateTime Date { get; set; }
         public bool? Known { get; set; }
         public string SignedFrom { get; set; }
-        [JsonIgnore]
+
         public virtual Class Class { get; set; }
-        [JsonIgnore]
         public virtual FormToSigner FormTosigner { get; set; }
     }
 }

@@ -41,7 +41,7 @@ namespace BL
         {
             fts.Status = status;//update status
             managerDL.updateStatusOfFTS(status, fts);
-            logger.LogInformation("we updated bsd status of" + fts.SId + " to be " + status);
+            logger.LogInformation("we updated bsd status of" + fts.SignerId + " to be " + status);
         }
 
         public async Task DeleteSigner(int id)

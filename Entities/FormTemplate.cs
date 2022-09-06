@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace RSWebApp.Entities
+namespace Entities
 {
     public partial class FormTemplate
     {

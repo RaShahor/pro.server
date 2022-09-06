@@ -85,6 +85,11 @@ namespace BL
             return true;
         }
 
+        public  string getPassword(string mail)
+        {
+            return _signerDl.getPassword(mail) ;
+        }
+
         /// <summary>
         /// //////////
         /// </summary>
