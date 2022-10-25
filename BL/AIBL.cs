@@ -20,50 +20,50 @@ namespace BL
             this.IaiDL= iai;
         }
 
-        public Sign AddForm(FormUserDTO formDto, int uId)
-        {
-            throw new NotImplementedException();
-        }
+        //public Sign AddForm(FormUserDTO formDto, int uId)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public Sign AddFT(FormTemplate ft, int uId)
-        {
-            throw new NotImplementedException();
-        }
+        ////public Sign AddFT(FormTemplate ft, int uId)
+        ////{
+        ////    throw new NotImplementedException();
+        ////}
 
-        public Sign AddSign(Sign sign, int uId)
-        {
-            throw new NotImplementedException();
-        }
+        //public Sign AddSign(Sign sign, int uId)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public void deleteSign(int id)
-        {
-            throw new NotImplementedException();
-        }
+        //public void deleteSign(int id)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public Task<List<Sign>> GetAllSignsFromAIModel(Page myPdf)
-        {
-            return IaiDL.GetAllSignsFromAIModel(myPdf);
-        }
+        //public Task<List<Sign>> GetAllSignsFromAIModel(Page myPdf)
+        //{
+        //    return IaiDL.GetAllSignsFromAIModel(myPdf);
+        //}
 
-        public Task<List<Sign>> GetAllSignsFromAIModel()
-        {
-            throw new NotImplementedException();
-        }
+        //public Task<List<Sign>> GetAllSignsFromAIModel()
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public async Task<FormTemplate> getFT(string name, int id)
-        {
-            return await IaiDL.getFT(name, id);
-        }
+        ////public async Task<FormTemplate> getFT(string name, int id)
+        ////{
+        ////    return await IaiDL.getFT(name, id);
+        ////}
 
-        public object getFTS(string name, int id)
-        {
-            throw new NotImplementedException();
-        }
+        //public object getFTS(string name, int id)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public void updateSign(Sign sign, object uId, Sign newSign)
-        {
-            throw new NotImplementedException();
-        }
+        //public void updateSign(Sign sign, object uId, Sign newSign)
+        //{
+        //    throw new NotImplementedException();
+        //}
         public void buildMessage(int id)
         {
             SmtpClient client = new SmtpClient("@gmail.com");

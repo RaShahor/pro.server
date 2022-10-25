@@ -17,6 +17,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\AIController.cs" />
+    <Compile Remove="Controllers\ManagerController.cs" />
+    <Compile Remove="Controllers\PDFController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
   </ItemGroup>
 

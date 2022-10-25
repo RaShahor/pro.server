@@ -15,7 +15,7 @@ namespace DAL
         ILogger logger;
 
 
-        public LogInDL(SignContext myC)
+        public LogInDL(SignContext myC,ILogger<LogInDL>logger)
         {
             myContext = myC;
 
@@ -25,15 +25,15 @@ namespace DAL
         {
             return await myContext.Users.ToListAsync();
         }
-        public async Task<User> PostUser(string email, string pwd)
+        public async Task<User> PostExistingUser(string email, string pwd)
         {
             User p = await myContext.Users.Where(x => x.Person.Mail == email && x.Person.Password == pwd).Include(x => x.Person).
-                 FirstAsync();
+            FirstAsync();
             return p;
 
         }
 
-        public async Task<User> PostUser(User user)
+        public async Task<User> PostNewUser(User user)
         {
             await myContext.People.AddAsync(user.Person);
             await myContext.Users.AddAsync(user);
@@ -44,20 +44,10 @@ namespace DAL
 
         public async Task<User> PutUser(string email, User user)
         {
-            //var userToUpdate = await myContext.People.FindAsync(user.Id);
-            ////myContext.Users.AddAsync(user);
-            
-            //if (userToUpdate == null)
-            //    return null;
-            //user.Person.Mail = email;
-            //string Mail = email;
-            //myContext.Entry(userToUpdate).CurrentValues.SetValues(Mail);
+            //I deleted another update option
             await myContext.Users.Update(user).GetDatabaseValuesAsync();
-             myContext.SaveChangesAsync();
-
-
+            myContext.SaveChangesAsync();
             return user;
-
         }
 
     }

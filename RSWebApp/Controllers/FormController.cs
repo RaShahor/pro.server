@@ -89,7 +89,7 @@ namespace RSWebApp.Controllers
         }
 
         [HttpGet("{name}/{Uid}")]
-        public async Task<FormTemplate> Get(string name, int id)
+        public async Task<FormTemplate> GetSingleFT(string name, int id)
         {
             return await _formService.getFT(name, id);
 

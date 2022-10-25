@@ -8,8 +8,8 @@ namespace DAL
 {
     public interface IAIDL//interface
     {
-        public Task<List<Sign>> GetAllSignsFromAIModel(Page myPdf);
-        Task<Signer> returnAwait(int id);
-        Task<FormTemplate> getFT(string name, int id);
+        //public Task<List<Sign>> GetAllSignsFromAIModel(Page myPdf);
+        //Task<Signer> returnAwait(int id);
+        ////Task<FormTemplate> getFT(string name, int id);
     }
 }

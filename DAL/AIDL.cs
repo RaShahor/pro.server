@@ -20,25 +20,23 @@ namespace DAL
 
             this.logger = logger;
         }
-        public Task<List<Sign>> GetAllSignsFromAIModel(Page myPdf)
-        {
-            //myPdf.AddImage();
-            throw new NotImplementedException();
-        }
+        //public Task<List<Sign>> GetAllSignsFromAIModel(Page myPdf)
+        //{
+        //    //myPdf.AddImage();
+        //    throw new NotImplementedException();
+        //}
 
-        public async Task<FormTemplate> getFT(string name, int id)
-        {
-            logger.LogWarning("error 500? but logger works!!!");
-            return myContext.FormTemplates.Where(ft => ft.Description == name).FirstOrDefault();
+        //public async Task<FormTemplate> getFT(string name, int id)
+        //{
+        //    logger.LogWarning("error 500? but logger works!!!");
+        //    return myContext.FormTemplates.Where(ft => ft.Description == name).FirstOrDefault();
 
-        }
-        //should i return the exact ft only (by its name?)
-        public async Task<Signer> returnAwait(int id)
-        {
-            Signer s = new Signer();
-
-
-            return s;
-        }
+        //}
+        ////should I return the exact ft only (by its name?)
+        //public async Task<Signer> returnAwait(int id)
+        //{
+        //    Signer s = new Signer();
+        //    return s;
+        //}
     }
 }

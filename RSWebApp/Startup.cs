@@ -45,8 +45,8 @@ namespace RSWebApp
             //services.AddTransient<IManagerDL,ManagerDL>();
             //services.AddTransient<IManagerBL, ManagerBL>();
             services.AddAutoMapper(typeof(Startup));
-            services.AddScoped<IManagerBL,ManagerBL>();
-            services.AddScoped<IManagerDL,ManagerDL>();
+            //services.AddScoped<IManagerBL,ManagerBL>();
+            //services.AddScoped<IManagerDL,ManagerDL>();
             services.AddScoped<IlogInBL,LogInBL>();
             services.AddScoped<ILogInDL,LogInDL>();
             services.AddScoped<IAIBL, AIBL>();
@@ -54,7 +54,7 @@ namespace RSWebApp
             services.AddScoped<ISignerBl,SignerBl>();
             services.AddScoped<ISignerDl, SignerDl>();
             services.AddScoped<IformBL, FormBL>();
-            services.AddScoped<IuserFor_managerDL, UserFor_managerDL>();
+            //services.AddScoped<IuserFor_managerDL, UserFor_managerDL>();
             services.AddScoped<IFormDL, FormDL>();
             services.AddSwaggerGen(c =>
             {

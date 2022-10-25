@@ -16,20 +16,20 @@ namespace BL
         }
         public async Task<User> postUser(string psw, string email)
         {
-            return await ILogIn.PostUser(psw, email);
+            return await ILogIn.PostExistingUser(psw, email);
         }
 
 
         public async Task<User> postUser(User user)
         {
-            return await ILogIn.PostUser(user);
+            return await ILogIn.PostNewUser(user);
         }
 
-        public async void PutUser(string email, User user)
-        {
-            user.Person.Mail = email;
-            ILogIn.PutUser(email, user);
-        }
+        //public async void PutUser(string email, User user)
+        //{
+        //    user.Person.Mail = email;
+        //    ILogIn.PutUser(email, user);
+        //}
 
         public async Task putUser(string mail, User curUser)
         {

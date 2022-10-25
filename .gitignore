@@ -365,3 +365,7 @@ FodyWeavers.xsd
 /DAL/ManagerDL.cs
 /BL/IManagerBL.cs
 /BL/ManagerBL.cs
+/DAL/IManagerDL.cs
+/DAL/IuserFormDl.cs
+/DAL/UserFormDl.cs
+/RSWebApp/Controllers/AIController.cs

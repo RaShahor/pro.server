@@ -12,7 +12,7 @@ namespace BL
 {
     public class Token : IToken
     {
-        private const double EXPIRY_DURATION_MINUTES = 30;
+        private const double EXPIRY_DURATION_MINUTES = 60;
 
         public string BuildToken(string key, string issuer, UserDTO user)
         {
