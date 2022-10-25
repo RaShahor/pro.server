@@ -52,6 +52,12 @@ namespace DAL
             _ctx.SaveChanges();
             return pwd;
         }
+
+        public DateTime getPassTime(string mail)
+        {
+            DateTime dt = (DateTime)_ctx.Signers.Where(s => s.Person.Mail == mail).FirstOrDefault().PassTime;
+            return dt.AddDays(1);
+        }
         //public async Task<bool> sendMail(int ftsId,Office office,int signer)
         //{
 

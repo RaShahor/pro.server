@@ -13,5 +13,6 @@ namespace DAL
         Task<Signer> getSignerById(int signer);
         Task<Person> getPersonById(int personId);
         string getPassword(string mail);
+        DateTime getPassTime(string mail);
     }
 }

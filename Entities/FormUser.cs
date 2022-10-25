@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 #nullable disable
 
@@ -21,11 +22,15 @@ namespace Entities
         public string Path { get; set; }
         public bool? Resign { get; set; }
         public short NumOfSigners { get; set; }
-
+        [JsonIgnore]
         public virtual FormTemplate FormTemplate { get; set; }
+        [JsonIgnore]
         public virtual User User { get; set; }
+        [JsonIgnore]
         public virtual ICollection<FormTemplate> FormTemplates { get; set; }
+        [JsonIgnore]
         public virtual ICollection<FormToSigner> FormToSigners { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Sign> Signs { get; set; }
     }
 }

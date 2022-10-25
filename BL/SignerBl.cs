@@ -85,9 +85,41 @@ namespace BL
             return true;
         }
 
-        public  string getPassword(string mail)
+        public  async Task<bool> getPassword(string mail)
         {
-            return _signerDl.getPassword(mail) ;
+            String pwd= _signerDl.getPassword(mail);
+            DateTime pass = _signerDl.getPassTime(mail);
+            //Signer ourSigner = await _signerDl.getSignerById(signer);
+            //Person p = await _signerDl.getPersonById(ourSigner.PersonId);
+
+            //send a mail
+            MailAddress to = new MailAddress(mail);
+            MailAddress from = new MailAddress("greensign2022@outlook.com");
+            MailMessage message = new MailMessage(from, to);
+            message.Subject = "verification password";
+            message.Body = "הסיסמא הזמנית שלך היא: "+pwd+" \n\n תשומת לבך, הסיסמא הינה מוגבלת בזמן!! (מאופשרת עד 24 ש' בלבד מרגע יצירתה) כלומר תקפה עד ל"+pass;
+            
+            
+            SmtpClient SmtpServer = new SmtpClient("smtp.office365.com");
+            SmtpServer.Port = 587;
+            SmtpServer.UseDefaultCredentials = false;
+            SmtpServer.Credentials = new System.Net.NetworkCredential("greensign2022@outlook.com", "ourj,hny");
+            SmtpServer.EnableSsl = true;
+            try
+            {
+                SmtpServer.Send(message);
+            }
+            catch (SmtpException ex)
+            {
+                Console.WriteLine(ex);
+                return false;
+            }
+            //update the file 'get alert' and return true
+            return true;
+
+
+
+            //return 
         }
 
         /// <summary>

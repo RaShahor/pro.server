@@ -63,18 +63,18 @@ namespace DAL
         }
         //Error://(Convert(f, FormUser).UserId == __id_0)' is invalid inside an 'Include' operation, since it does not represent a property access: 
         //'t => t.MyProperty'. To target navigations declared on derived types, use casting ('t => ((Derived)t).MyProperty')
-        public async Task<List<FormTemplate>> getAllFormsTemplatesByUser(int id)
-        {
+        //public async Task<List<FormTemplate>> getAllFormsTemplatesByUser(int id)
+        //{
 
 
-            var FT = await myContext.FormTemplates
-                    .Where(x => x.FormUser.UserId==id)
-                    //.ThenInclude(f => ((FormUser)f).UserId == id)
-                    .ToListAsync();
+        //    var FT = await myContext.FormTemplates
+        //            .Where(x => x.FormUser.UserId==id)
+        //            //.ThenInclude(f => ((FormUser)f).UserId == id)
+        //            .ToListAsync();
 
-            return FT;
+        //    return FT;
 
-        }
+        //}
 
         public async Task<List<FormToSigner>> getAllFormsToSignerByUserIdAndSignerId(int idu, int ids)
         {
@@ -87,27 +87,6 @@ namespace DAL
 
         }
 
-        //public async Task<List<FormToSigner>> getAllFormsToSignerByUserId(int idu)
-        //{
-
-        //    List<FormToSigner> UTS = await myContext.FormToSigners
-        //           .Where(x => x.Form.UserId == idu)
-
-        //           .ToListAsync();
-        //    return UTS;
-
-        //}
-        //Error://(f.UserId == __us_0)' is invalid inside an 'Include' operation, since it does not represent a property access:
-        // 't => t.MyProperty'. To target navigations declared on derived types, use casting ('t => ((Derived)t).MyProperty')
-        public async Task<List<FormToSigner>> getAllFormsToUserBySigner(int us)
-        {
-
-            List<FormToSigner> FTS = await myContext.FormToSigners
-                    .Where(x => (x).Form.UserId == us)
-                    .ToListAsync();
-            return FTS;
-
-        }
 
         public async Task<List<Signer>> getAllSignersByUser(int id)
         {

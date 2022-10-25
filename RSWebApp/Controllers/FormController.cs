@@ -18,68 +18,72 @@ namespace RSWebApp.Controllers
     [ApiController]
     public class FormController : ControllerBase
     {
-        private readonly Ifor_managerBL formService;
+        //funcs of this controller:
+        //1.get num of signers per form
+        //2.get all fts for office
+        //3.get all ft per office
+        //4.new fts
+        
+        
+        private readonly IformBL _formService;
         // GET: api/<FormController>
-        public FormController(Ifor_managerBL iform)
+        public FormController(IformBL iform)
         {
-            formService = iform;
+            _formService = iform;
         }
+
+
         [HttpGet("{id}/SignersToForm")]
         public int Get(int id)
         {
-            return  formService.getSignersNumberToForm(id);
+            return  _formService.getSignersNumberToForm(id);
         }
-        //    [HttpPost, DisableRequestSizeLimit]
-        //    [Route("SaveForm")]
-        //    public ActionResult SaveForm([FromForm] Document form,int userId)
-        //    {
-        //        if (form != null)
-        //        {
-        //            //we can send the userId from Client, or get it from Request.HttpContext.User.Identity.Name
-        //            //probably we should replace the user name with user id
-        //            //int userId = userId;
 
-        //            /*if (!imageService.ValidateDuplicateFileName(userId, image.FileName))
-        //                return StatusCode(500, "כבר קימת תמונה למשתמש בשם זה");*/
 
-        //            //save file on disk
-        //            //we put it in the web layer because IFormFile is part of AspNetCore.Http namespace - that is a part of the web layer
-        //            //string directory = Path.Combine(@"C:\Temp", userId.ToString());
-        //            var folderName = Path.Combine("Resources", userId.ToString());
-        //            var directory = Path.Combine(Directory.GetCurrentDirectory(), folderName);
-        //            Directory.CreateDirectory(directory);
-        //            string filePath = Path.Combine(directory, form.FileName);
-        //            using (Stream fileStream = new FileStream(filePath, FileMode.Create))
-        //            {
-        //                form.Save(fileStream);
-        //            }
-        //            //Aspose.Pdf.Document
-        //            //send to save in DB
-        //            FormUser newForm = new FormUser
-        //            {
-        //                Path = Path.Combine(folderName, form.FileName), // we save only relational path
-        //                FormName = form.FileName,
-        //                UserId = userId
-        //            };
-        //            formService.SaveForm(newForm);
-        //            return Ok();
-        //        }return NoContent();
+        [HttpGet("{id}/FormToSigner")]
+        public async Task<List<FormToSigner>> GetAllFormsToSignersByOffice(int id)//get all forms relates to signers by office
+        {
+            List<FormToSigner> trial = await _formService.getAllFormsToUserBySigner(id);
+            if (trial != null)
+                return trial;
+            throw new NotFoundException();
+        }
 
-        //    }
+        
+        [HttpGet("{id}/FormTemplate")]
+        public async Task<List<FormTemplate>> GetTmp(int id)//קבלת כל תבניות הטפסים השמורות תחת משתמש מסויים
+        {
 
-        //[HttpGet]
-        //[Route("GetFormForUser")]
-        //public Task<FormUser> GetFormForUser(int userId,string fileName)
-        //{
-        //    return formService.GetUserForm(userId,fileName);
-        //}
-        //[HttpGet]
-        //[Route("GetPDF")]
-        //public Task<Page> GetPDF( string fileName)
-        //{
+            return await _formService.getAllFormsTemplatesByUser(id);
+        }
 
-        //    return GetPDF("wwwroot/Rsources/sample.pdf");
-        //        //formService.GetUserForm(userId, fileName);
-        //}
+        
+        [HttpGet("{idu}/{ids}/FormTS")]
+        public async Task<List<FormToSigner>> GetFTSPerSigner(int idu, int ids)//קבלת כל טפסים למשתמש (רבים לרבים) של חותם נבחר של משתמש נבחר
+        {
+
+            return await _formService.getAllFormsToSignerByUserIdAndSignerId(idu, ids);
+        }
+
+        [HttpPost("{Sid}/{cls}/{status}/{order}")]//שמירת טופס חדש ללקוח
+        public async Task<FormToSigner> PostNewFormToSigner([FromBody] FormUser form, int SId, int cls, int status, int order)
+        {
+            FormToSigner formToSigner = new FormToSigner();
+            formToSigner.Class = (short)cls;
+            formToSigner.FormId = form.Id;
+            formToSigner.SignerId = SId;
+            formToSigner.Status = status;
+            formToSigner.Order = (byte?)order;
+
+            return await _formService.newFTS(formToSigner);
+        }
+
+
+        [HttpPut("{id}")]
+        public async void updateStatusOfFTS(int id, [FromBody] FormToSigner fts)//עדכון סטטוס של טופס ללקוח
+        {
+            await _formService.updateStatusOfFTS(id, fts);
+
+        }
     }
 }

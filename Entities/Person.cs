@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 #nullable disable
 
@@ -20,8 +21,9 @@ namespace Entities
         public string Mail { get; set; }
         public string Password { get; set; }
         public string Salt { get; set; }
-
+        [JsonIgnore]
         public virtual ICollection<Signer> Signers { get; set; }
+        [JsonIgnore]
         public virtual ICollection<User> Users { get; set; }
     }
 }

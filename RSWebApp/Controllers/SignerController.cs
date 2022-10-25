@@ -25,7 +25,7 @@ namespace RSWebApp.Controllers
         }
         // GET: api/<SignerController>
         [HttpGet("{mail}")]
-        public string GetPWD(string mail)
+        public Task<bool> GetPWD(string mail)
         {
             return _signerBL.getPassword(mail);
         }

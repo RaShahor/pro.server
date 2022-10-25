@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 #nullable disable
 
@@ -19,10 +20,13 @@ namespace Entities
         public short Class { get; set; }
         public int? Status { get; set; }
         public byte? Order { get; set; }
-
+        [JsonIgnore]
         public virtual FormUser Form { get; set; }
+        [JsonIgnore]
         public virtual Signer Signer { get; set; }
+        [JsonIgnore]
         public virtual Status StatusNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<FormSigner> FormSigners { get; set; }
     }
 }

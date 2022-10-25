@@ -53,8 +53,9 @@ namespace RSWebApp
             services.AddScoped<IAIDL, AIDL>();
             services.AddScoped<ISignerBl,SignerBl>();
             services.AddScoped<ISignerDl, SignerDl>();
-            services.AddScoped<Ifor_managerBL, For_managerBL>();
+            services.AddScoped<IformBL, FormBL>();
             services.AddScoped<IuserFor_managerDL, UserFor_managerDL>();
+            services.AddScoped<IFormDL, FormDL>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "RSWebApp", Version = "v1" });

@@ -15,10 +15,13 @@ namespace RSWebApp.Controllers
     [ApiController]
     public class LogInController : ControllerBase
     {
-        IlogInBL logBL;
-        public LogInController(IlogInBL logBL)
+        readonly IlogInBL logBL;
+        readonly IToken tokenService;
+
+        public LogInController(IlogInBL logBL, IToken token)
         {
             this.logBL = logBL;
+            tokenService = token;
         }
         // GET: api/<SecretaryController>
         //[HttpGet]
@@ -39,6 +42,13 @@ namespace RSWebApp.Controllers
             else return u;
         }
 
+        //[HttpPost("{mail}/{password}")]
+
+        //public async Task<ActionResult<User>> logIn(string mail, string password)
+        //{
+        //    tokenService.BuildToken(mail, password);
+
+        //}
 
         // POST: HomeController/Edit/5
         [HttpPost]
