@@ -14,5 +14,7 @@ namespace DAL
         Task<Person> getPersonById(int personId);
         string getPassword(string mail);
         DateTime getPassTime(string mail);
+        Task<List<Signer>> getAllSignersByUser(int id);
+        Task<Signer> newSigner(Signer signer, int Uid = 1);
     }
 }

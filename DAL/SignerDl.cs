@@ -11,29 +11,29 @@ namespace DAL
 {
     public class SignerDl:ISignerDl
     {
-        private readonly SignContext _ctx;
+        private readonly SignContext myContext;
         public SignerDl(SignContext scon)
         {
-            this._ctx = scon;
+            this.myContext = scon;
         }
         public async Task<Signer> getSignerById(int signer)
         {
-            return await _ctx.Signers.FindAsync(signer);
+            return await myContext.Signers.FindAsync(signer);
            
 
         }
 
         public async Task<Person> getPersonById(int p)
         {
-            Person pers = await _ctx.People.FindAsync(p);
+            Person pers = await myContext.People.FindAsync(p);
             return pers;
         }
 
         public string getPassword(string mail)
         {
-            DateTime passTime = (DateTime)_ctx.Signers.Where(s => s.Person.Mail == mail).FirstOrDefault().PassTime;
+            DateTime passTime = (DateTime)myContext.Signers.Where(s => s.Person.Mail == mail).FirstOrDefault().PassTime;
             if (passTime.AddHours(24) > DateTime.Now)
-                return _ctx.People.Where(p => p.Mail == mail).FirstOrDefault().Password;
+                return myContext.People.Where(p => p.Mail == mail).FirstOrDefault().Password;
             return generatePWD(mail);
         }
 
@@ -45,27 +45,41 @@ namespace DAL
             {
                 pwd+=((char)(rnd.Next(106) + 20));
             }
-            Signer cur = _ctx.Signers.Where(s => s.Person.Mail == mail).Include(s=>s.Person).FirstOrDefault();
+            Signer cur = myContext.Signers.Where(s => s.Person.Mail == mail).Include(s=>s.Person).FirstOrDefault();
             cur.Person.Password = pwd;
             cur.PassTime = DateTime.Now;
-            _ctx.Signers.Update(cur);
-            _ctx.SaveChanges();
+            myContext.Signers.Update(cur);
+            myContext.SaveChanges();
             return pwd;
         }
 
         public DateTime getPassTime(string mail)
         {
-            DateTime dt = (DateTime)_ctx.Signers.Where(s => s.Person.Mail == mail).FirstOrDefault().PassTime;
+            DateTime dt = (DateTime)myContext.Signers.Where(s => s.Person.Mail == mail).FirstOrDefault().PassTime;
             return dt.AddDays(1);
         }
-        //public async Task<bool> sendMail(int ftsId,Office office,int signer)
-        //{
 
+        public async Task<List<Signer>> getAllSignersByUser(int id)
+        {
 
+            var SIGNERS = myContext.Signers
+                        .Where(x => x.UserId == id).Include(s => s.Person)
+                        .ToList();
+            return SIGNERS;
 
+        }
 
-        //            }
-
+        public async Task<Signer> newSigner(Signer signer, int Uid = 1)
+        {
+            //SignContext con = new SignContext();
+            var u = myContext.Users.Find(signer.UserId);
+            // myContext.Users.איך מוסיפים לתוך מסד הנתונים?
+            if ((User)u != null)
+                ((User)u).Signers.Add(signer);//
+            await myContext.Signers.AddAsync(signer);
+            await myContext.SaveChangesAsync();
+            return signer;
+        }
     }
             }
 

@@ -76,5 +76,12 @@ namespace DAL
                 return false;
             return true;
         }
+
+        public async Task<FormTemplate> getFT(string name, int id)
+        {
+            //logger.LogWarning("error 500? but logger works!!!");
+            return myContext.FormTemplates.Where(ft => ft.Description == name&&ft.FormUser.UserId==id).FirstOrDefault();
+
+        }
     }
 }

@@ -30,18 +30,7 @@ namespace RSWebApp.Controllers
             return _signerBL.getPassword(mail);
         }
 
-        //// GET api/<SignerController>/5
-        //[HttpGet("{id}")]
-        //public Page loadPDF(int FTSid)
-        //{
-        //    return "value";
-        //}
-        //GET api/<SignerController>/5
-        //[HttpGet("{id}")]
-        //public async Task<List<Sign>> loadSignLocationPoints(int FTSid)
-        //{
-        //    return _signerBL.loadSignPointsLocation(FTSid); 
-        //}
+        
 
         // POST api/<SignerController>
         [HttpPost]
@@ -60,37 +49,20 @@ namespace RSWebApp.Controllers
                 return "an error occourd when tried to send email";
             return "mail was sent succesfully!";
         }
-        
-        //// POST api/<SignerController>
-        //[HttpPost]
-        //public void newSignedForm([FromBody] FormSignerDTO fsDto)
-        //{
-        //    _signerBL.newSignedForm(fsDto);
-        //}
-        //[HttpPost]
-        //public void newSignImage([FromBody] Image sign,int fts,int signId)
-        //{
-        //    _signerBL.addSign(sign,-fts,signId);
-        //}
 
-        //[HttpPost]
-        //public void buildSignedForm([FromBody] FormSignerDTO fsDto,Page page,FormToSigner fts)//int ftsId
-        //{
-        //    _signerBL.newSignedForm(fsDto,page,fts.Id);
-        //}
+        [HttpGet("{id}/Signers")]
+        public async Task<List<Signer>> GetSigners(int id)//קבלת כל הלקוחות של המשתמש
+        {
 
-        //// PUT api/<SignerController>/5
-        //[HttpPut("{id}")]
-        //public void updateSign(int id, [FromBody] string value)
-        //{
-            
-        //}
+            return await _signerBL.getAllSignersByUser(id);
+        }
 
-        //// DELETE api/<SignerController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
 
+        [HttpPost("{id}")]
+        public async Task PostNewSigner(int id, [FromBody] Signer signerDTO)//שמירת לקוח חדש למשתמש - שימוש ב: מיפוי dto
+        {
+            await _signerBL.NewSigner(signerDTO, id);
+        }
         // DELETE api/<SignerController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)

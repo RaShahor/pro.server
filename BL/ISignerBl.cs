@@ -13,10 +13,10 @@ namespace BL
     public interface ISignerBl
     {
         List<Sign> loadSignPointsLocation(int fTSid);
-        void newSignedForm(FormSignerDTO fsDto, Page page, int id);
         void addSign(Image sign, int v, int signId);
-        void newSignedForm(FormSignerDTO fsDto);
         public Task<bool> sendMail(int ftsId, Office office, int signer);
         public Task<bool>getPassword (string mail);
+        Task<List<Signer>> getAllSignersByUser(int id);
+        Task<Signer> NewSigner(Signer signerDTO, int UId);
     }
 }

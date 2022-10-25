@@ -62,5 +62,10 @@ namespace BL
             _formDL.updateStatusOfFTS(status, fts);
             _logger.LogInformation("we updated bsd status of" + fts.SignerId + " to be " + status);
         }
+
+        public async Task<FormTemplate> getFT(string name, int id)
+        {
+            return await _formDL.getFT(name, id);
+        }
     }
 }

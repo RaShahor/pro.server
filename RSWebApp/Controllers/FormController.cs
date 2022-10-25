@@ -23,6 +23,8 @@ namespace RSWebApp.Controllers
         //2.get all fts for office
         //3.get all ft per office
         //4.new fts
+        //5.get fts per signer (and office of course)
+        //6.update status of fts
         
         
         private readonly IformBL _formService;
@@ -83,6 +85,13 @@ namespace RSWebApp.Controllers
         public async void updateStatusOfFTS(int id, [FromBody] FormToSigner fts)//עדכון סטטוס של טופס ללקוח
         {
             await _formService.updateStatusOfFTS(id, fts);
+
+        }
+
+        [HttpGet("{name}/{Uid}")]
+        public async Task<FormTemplate> Get(string name, int id)
+        {
+            return await _formService.getFT(name, id);
 
         }
     }

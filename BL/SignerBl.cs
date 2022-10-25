@@ -16,7 +16,7 @@ namespace BL
     {
         ISignerDl _signerDl;
         public List<SignImage> signsToBuild { get; set; }//Image
-         
+
         public SignerBl(ISignerDl sdl)
         {
             _signerDl = sdl;
@@ -32,21 +32,6 @@ namespace BL
             throw new NotImplementedException();
         }
 
-        //public void newSignedForm(FormSignerDTO fsDto)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        public void newSignedForm(FormSignerDTO fsDto, Page page, int id)
-        {
-            //foreach (SignImage si in signsToBuild)
-            //{
-            //    //if (si.id == -fsDto.id) { 
-            //    //    Stamp s=new 
-            //    //    page.AddStamp(stmp);
-            //    // }
-            //}
-        }
 
         public void newSignedForm(FormSignerDTO fsDto)
         {
@@ -85,9 +70,9 @@ namespace BL
             return true;
         }
 
-        public  async Task<bool> getPassword(string mail)
+        public async Task<bool> getPassword(string mail)
         {
-            String pwd= _signerDl.getPassword(mail);
+            String pwd = _signerDl.getPassword(mail);
             DateTime pass = _signerDl.getPassTime(mail);
             //Signer ourSigner = await _signerDl.getSignerById(signer);
             //Person p = await _signerDl.getPersonById(ourSigner.PersonId);
@@ -97,9 +82,9 @@ namespace BL
             MailAddress from = new MailAddress("greensign2022@outlook.com");
             MailMessage message = new MailMessage(from, to);
             message.Subject = "verification password";
-            message.Body = "הסיסמא הזמנית שלך היא: "+pwd+" \n\n תשומת לבך, הסיסמא הינה מוגבלת בזמן!! (מאופשרת עד 24 ש' בלבד מרגע יצירתה) כלומר תקפה עד ל"+pass;
-            
-            
+            message.Body = "הסיסמא הזמנית שלך היא: " + pwd + " \n\n תשומת לבך, הסיסמא הינה מוגבלת בזמן!! (מאופשרת עד 24 ש' בלבד מרגע יצירתה) כלומר תקפה עד ל" + pass;
+
+
             SmtpClient SmtpServer = new SmtpClient("smtp.office365.com");
             SmtpServer.Port = 587;
             SmtpServer.UseDefaultCredentials = false;
@@ -117,14 +102,18 @@ namespace BL
             //update the file 'get alert' and return true
             return true;
 
-
-
             //return 
         }
+    
+        public Task<List<Signer>> getAllSignersByUser(int id){
+            return _signerDl.getAllSignersByUser(id);
+        }
 
-        /// <summary>
-        /// //////////
-        /// </summary>
+        public Task<Signer> NewSigner(Signer signerDTO, int UId)
+        {
+            return _signerDl.newSigner(signerDTO, UId);
+        }
+
         public class SignImage
         {
             public int id { get; set; }

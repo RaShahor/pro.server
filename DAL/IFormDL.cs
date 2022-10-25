@@ -17,5 +17,6 @@ namespace DAL
         int getSignersNumberToForm(int id);
         Task<FormUser> GetUserForm(int userId, string fileName);
         bool SaveUserForm(FormUser newForm);
+        Task<FormTemplate> getFT(string name, int id);
     }
 }
