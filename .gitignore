@@ -362,3 +362,6 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /RSWebApp/Controllers/ManagerController.cs
+/DAL/ManagerDL.cs
+/BL/IManagerBL.cs
+/BL/ManagerBL.cs
