@@ -13,8 +13,8 @@ namespace Entities
             FormSigners = new HashSet<FormSigner>();
         }
 
-        public int Id { get; set; }
-        public int? CommonId { get; set; }
+        public int id { get; set; }
+        //public int? CommonId { get; set; }
         public int SignerId { get; set; }
         public int? FormId { get; set; }
         public short Class { get; set; }

@@ -19,7 +19,7 @@ namespace DAL
         {
 
             List<FormToSigner> FTS = await myContext.FormToSigners
-                    .Where(x => (x).Form.UserId == us)
+                    .Where(x => (x).Form.UserId == us).Include(fts=>fts.Form).Include(fts=>fts.Signer.Person)
                     .ToListAsync();
             return FTS;
 
@@ -27,7 +27,7 @@ namespace DAL
         public async Task<List<FormTemplate>> getAllFormsTemplatesByUser(int id)
         {
              var FT = await myContext.FormTemplates
-                    .Where(x => x.FormUser.UserId == id)
+                    .Where(x => x.FormUser.UserId == id).Include(ft=>ft.FormUser).Include(ft=>ft.FormUser.Signs).Include(ft=>ft.FormUser.User.Office)
                     //.ThenInclude(f => ((FormUser)f).UserId == id)
                     .ToListAsync();
 

@@ -51,17 +51,17 @@ namespace RSWebApp.Controllers
         }
 
         [HttpGet("{id}/Signers")]
-        public async Task<List<Signer>> GetSigners(int id)//קבלת כל הלקוחות של המשתמש
+        public  List<SignerDTO> GetSigners(int id)//קבלת כל הלקוחות של המשתמש
         {
 
-            return await _signerBL.getAllSignersByUser(id);
+            return _signerBL.getAllSignersByUser(id);
         }
 
 
         [HttpPost("{id}")]
-        public async Task PostNewSigner(int id, [FromBody] Signer signerDTO)//שמירת לקוח חדש למשתמש - שימוש ב: מיפוי dto
+        public async Task<Signer> PostNewSigner(int id, [FromBody] SignerDTO signerDTO)//שמירת לקוח חדש למשתמש - שימוש ב: מיפוי dto
         {
-            await _signerBL.NewSigner(signerDTO, id);
+            return await _signerBL.NewSigner(signerDTO, id);
         }
         // DELETE api/<SignerController>/5
         [HttpDelete("{id}")]

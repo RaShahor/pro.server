@@ -30,7 +30,7 @@ namespace Entities
         public virtual ICollection<FormTemplate> FormTemplates { get; set; }
         [JsonIgnore]
         public virtual ICollection<FormToSigner> FormToSigners { get; set; }
-        [JsonIgnore]
+        //[JsonIgnore]
         public virtual ICollection<Sign> Signs { get; set; }
     }
 }

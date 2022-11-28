@@ -18,6 +18,7 @@ namespace Entities
         public string Name { get; set; }
         public string Address { get; set; }
         public decimal? Fee { get; set; }
+        [JsonIgnore]
         public byte[] Logo { get; set; }
         [JsonIgnore]
         public virtual ICollection<Class> Classes { get; set; }

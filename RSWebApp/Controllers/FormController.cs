@@ -1,6 +1,7 @@
 ﻿using Aspose;
 using Aspose.Pdf;
 using BL;
+using DTO;
 using Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -42,10 +43,11 @@ namespace RSWebApp.Controllers
         }
 
 
-        [HttpGet("{id}/FormToSigner")]
-        public async Task<List<FormToSigner>> GetAllFormsToSignersByOffice(int id)//get all forms relates to signers by office
+        [HttpGet]
+        [Route("{id}/FormToSigner")]
+        public async Task<List<FormToSignerDTO>> GetAllFormsToSignersByOffice(int id)//get all forms relates to signers by office
         {
-            List<FormToSigner> trial = await _formService.getAllFormsToUserBySigner(id);
+            List<FormToSignerDTO> trial = await _formService.getAllFormsToUserBySigner(id);
             if (trial != null)
                 return trial;
             throw new NotFoundException();
@@ -53,7 +55,7 @@ namespace RSWebApp.Controllers
 
         
         [HttpGet("{id}/FormTemplate")]
-        public async Task<List<FormTemplate>> GetTmp(int id)//קבלת כל תבניות הטפסים השמורות תחת משתמש מסויים
+        public async Task<List<TemplateDTO>> GetTmp(int id)//קבלת כל תבניות הטפסים השמורות תחת משתמש מסויים
         {
 
             return await _formService.getAllFormsTemplatesByUser(id);
@@ -67,13 +69,13 @@ namespace RSWebApp.Controllers
             return await _formService.getAllFormsToSignerByUserIdAndSignerId(idu, ids);
         }
 
-        [HttpPost("{Sid}/{cls}/{status}/{order}")]//שמירת טופס חדש ללקוח
-        public async Task<FormToSigner> PostNewFormToSigner([FromBody] FormUser form, int SId, int cls, int status, int order)
+        [HttpPost("{cls}/{status}/{order}")]//שמירת טופס חדש ללקוח
+        public async Task<FormToSigner> PostNewFormToSigner( int sId, int cls, int status, int order, [FromBody] FormUser form)
         {
             FormToSigner formToSigner = new FormToSigner();
             formToSigner.Class = (short)cls;
             formToSigner.FormId = form.Id;
-            formToSigner.SignerId = SId;
+            formToSigner.SignerId = sId;
             formToSigner.Status = status;
             formToSigner.Order = (byte?)order;
 

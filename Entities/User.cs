@@ -17,7 +17,7 @@ namespace Entities
         public int Id { get; set; }
         public int? PersonId { get; set; }
         public int? OfficeId { get; set; }
-        [JsonIgnore]
+        //[JsonIgnore]
         public virtual Office Office { get; set; }
         public virtual Person Person { get; set; }
         [JsonIgnore]

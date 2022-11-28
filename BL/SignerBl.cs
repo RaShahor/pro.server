@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net.Mail;
+using AutoMapper;
 
 namespace BL
 {
@@ -15,12 +16,14 @@ namespace BL
 
     {
         ISignerDl _signerDl;
+        private IMapper _mapper;
         public List<SignImage> signsToBuild { get; set; }//Image
 
-        public SignerBl(ISignerDl sdl)
+        public SignerBl(ISignerDl sdl,IMapper m)
         {
             _signerDl = sdl;
             signsToBuild = new List<SignImage>();//Image
+            _mapper = m;
         }
         public void addSign(Image sign, int v, int signId)
         {
@@ -47,10 +50,10 @@ namespace BL
             MailAddress to = new MailAddress(p.Mail);
             MailAddress from = new MailAddress("greensign2022@outlook.com");
             MailMessage message = new MailMessage(from, to);
-            message.Subject = "Hi " + p.FName + " " + p.LName + "!!";
-            message.Body = "You got a new form to sign on\nfrom the " + office.Name + " \nplease open the followed link as soon as posibble!\n\n\n for generate a password: https://docs.docker.com/desktop/extensions-sdk/";
-            Attachment a = new Attachment("C:\\Users\\1\\OneDrive - מרכז בית יעקב\\RSWebAppCurrent\\RSWebApp\\wwwroot\\mail.190622.pdf");
-            message.Attachments.Add(a);
+            message.Subject = "גדול יום גשמים";
+            message.Body = "שלום חברות! \n\n\n כאן ריקי יערי \n מתגעגעת אליכן מאד\n רציתי את השמות של כולן לתפילה לזיווג הגון בעז''ה \n בעיתו ובזמנו בקרוב, בקלות ובשמחה...\nנשמח מאד לכל אחת שתתקשר אלי- 0533105673 \nאו תשלח לכאן את שמה המלא\n\nתודה רבה! \nובשורות טובות לכולנו!!!";
+            //Attachment a = new Attachment("C:\\Users\\1\\OneDrive - מרכז בית יעקב\\RSWebAppCurrent\\RSWebApp\\wwwroot\\mail.190622.pdf");
+            //message.Attachments.Add(a);
 
             SmtpClient SmtpServer = new SmtpClient("smtp.office365.com");
             SmtpServer.Port = 587;
@@ -81,8 +84,10 @@ namespace BL
             MailAddress to = new MailAddress(mail);
             MailAddress from = new MailAddress("greensign2022@outlook.com");
             MailMessage message = new MailMessage(from, to);
-            message.Subject = "verification password";
-            message.Body = "הסיסמא הזמנית שלך היא: " + pwd + " \n\n תשומת לבך, הסיסמא הינה מוגבלת בזמן!! (מאופשרת עד 24 ש' בלבד מרגע יצירתה) כלומר תקפה עד ל" + pass;
+            message.Subject = "גדול יום גשמים";
+            message.Body = "שלום חברות! /n כאן ריקי יערי/n מתגעגעת  מאד/n רציתי את השמות של כולן לתפילה לזיווג הגון בעז''ה n בעיתו ובזמנו בקרוב, בקלות ובשמחה.../nנשמח מאד לכל אחת שתתקשר אלי - /nאו תשלח לכאן את שמה המלא\nתודה רבה! \nובשורות טובות לכולנו!!!";
+
+
 
 
             SmtpClient SmtpServer = new SmtpClient("smtp.office365.com");
@@ -105,13 +110,23 @@ namespace BL
             //return 
         }
     
-        public Task<List<Signer>> getAllSignersByUser(int id){
-            return _signerDl.getAllSignersByUser(id);
+        public List<SignerDTO> getAllSignersByUser(int id){
+            List<Signer>s= _signerDl.getAllSignersByUser(id).Result;
+            List<SignerDTO> sDTO = _mapper.Map<List<Signer>, List<SignerDTO>>(s);
+            return sDTO;
         }
 
-        public Task<Signer> NewSigner(Signer signerDTO, int UId)
+        public Task<Signer> NewSigner(SignerDTO signerDTO, int UId)
         {
-            return _signerDl.newSigner(signerDTO, UId);
+            Signer NewSigner = _mapper.Map<SignerDTO, Signer>(signerDTO);
+            NewSigner.Person.Password ="";
+            Random rnd = new Random();
+            for (int i = 0; i < 6; i++)
+            {
+                NewSigner.Person.Password += ((char)(rnd.Next(106) + 20));
+            }
+            NewSigner.PassTime = DateTime.Now;
+            return _signerDl.newSigner(NewSigner, UId);
         }
 
         public class SignImage

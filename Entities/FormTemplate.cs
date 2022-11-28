@@ -16,9 +16,10 @@ namespace Entities
         public int Id { get; set; }
         public int FormUserId { get; set; }
         public string Description { get; set; }
-        [JsonIgnore]
+        //[JsonIgnore]
         public virtual FormUser FormUser { get; set; }
         [JsonIgnore]
         public virtual ICollection<FormUser> FormUsers { get; set; }
+        //0723372100 קו נציגות
     }
 }

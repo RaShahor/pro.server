@@ -16,7 +16,7 @@ namespace BL
         void addSign(Image sign, int v, int signId);
         public Task<bool> sendMail(int ftsId, Office office, int signer);
         public Task<bool>getPassword (string mail);
-        Task<List<Signer>> getAllSignersByUser(int id);
-        Task<Signer> NewSigner(Signer signerDTO, int UId);
+        List<SignerDTO>getAllSignersByUser(int id);
+        Task<Signer> NewSigner(SignerDTO signerDTO, int UId);
     }
 }

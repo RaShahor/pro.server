@@ -131,11 +131,11 @@ namespace DAL
             {
                 entity.ToTable("formToSigner");
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.id).HasColumnName("id");
 
                 entity.Property(e => e.Class).HasColumnName("class");
 
-                entity.Property(e => e.CommonId).HasColumnName("common_id");
+                //entity.Property(e => e.CommonId).HasColumnName("common_id");
 
                 entity.Property(e => e.FormId).HasColumnName("form_id");
 

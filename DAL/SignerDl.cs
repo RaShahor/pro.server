@@ -37,7 +37,7 @@ namespace DAL
             return generatePWD(mail);
         }
 
-        private string generatePWD(string mail)
+        public string generatePWD(string mail)//Has to transfer to BL and change back to private!!
         {
             string pwd = "";
             Random rnd = new Random();
@@ -72,7 +72,7 @@ namespace DAL
         public async Task<Signer> newSigner(Signer signer, int Uid = 1)
         {
             //SignContext con = new SignContext();
-            var u = myContext.Users.Find(signer.UserId);
+            var u = myContext.Users.Find(Uid);
             // myContext.Users.איך מוסיפים לתוך מסד הנתונים?
             if ((User)u != null)
                 ((User)u).Signers.Add(signer);//

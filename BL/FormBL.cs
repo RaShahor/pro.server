@@ -1,4 +1,6 @@
-﻿using DAL;
+﻿using AutoMapper;
+using DAL;
+using DTO;
 using Entities;
 using Microsoft.Extensions.Logging;
 using System;
@@ -14,12 +16,14 @@ namespace BL
         //?private readonly IuserFor_managerDL userFor_managerDL;
         private IFormDL _formDL;
         private ILogger _logger;
-        
-        public FormBL( IFormDL formDL,ILogger<FormBL>log)
+        private IMapper _mapper;
+
+        public FormBL( IFormDL formDL,ILogger<FormBL>log,IMapper mapper)
         {
            //? userFor_managerDL = iuserFor_managerDL;IuserFor_managerDL iuserFor_managerDL,
             _formDL = formDL;
             _logger = log;
+            _mapper = mapper;
         }
 
         public int getSignersNumberToForm(int id)
@@ -37,14 +41,18 @@ namespace BL
             return _formDL.SaveUserForm(newForm);
         }
 
-        public Task<List<FormToSigner>> getAllFormsToUserBySigner(int id)
+        public async Task<List<FormToSignerDTO>> getAllFormsToUserBySigner(int id)
         {
-            return _formDL.getAllFormsToUserBySigner(id);
+            List<FormToSigner> fts =await _formDL.getAllFormsToUserBySigner(id);
+            List<FormToSignerDTO>ftsDTOs=_mapper.Map<List<FormToSigner>,List<FormToSignerDTO>>(fts);
+            return ftsDTOs;
         }
 
-        public Task<List<FormTemplate>> getAllFormsTemplatesByUser(int id)
+        public async Task<List<TemplateDTO>> getAllFormsTemplatesByUser(int id)
         {
-            return _formDL.getAllFormsTemplatesByUser(id);
+            List<FormTemplate>ft=await _formDL.getAllFormsTemplatesByUser(id);
+            List<TemplateDTO>ftDTOs=_mapper.Map<List<FormTemplate>,List<TemplateDTO>>(ft);
+            return ftDTOs;
         }
 
         public Task<List<FormToSigner>> getAllFormsToSignerByUserIdAndSignerId(int idu, int ids)
