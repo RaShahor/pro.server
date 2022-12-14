@@ -19,6 +19,7 @@ using Entities;
 using DAL;
 using BL;
 using Middleware;
+using RSWebApp.MiddleWare;
 
 namespace RSWebApp
 {
@@ -55,6 +56,7 @@ namespace RSWebApp
             services.AddScoped<IformBL, FormBL>();
             //services.AddScoped<IuserFor_managerDL, UserFor_managerDL>();
             services.AddScoped<IFormDL, FormDL>();
+            services.AddScoped<IToken, Token>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "RSWebApp", Version = "v1" });
@@ -98,7 +100,7 @@ namespace RSWebApp
                 app.UseRouting();
                 app.UseCors(options =>
                 {
-                    options.AllowAnyOrigin();
+                    options.WithOrigins("http://localhost:4200");
                     options.AllowAnyMethod();
                     options.AllowAnyHeader();
                 });
@@ -115,13 +117,14 @@ namespace RSWebApp
                 //        "image-src 'self'");
                 //    await next();
                 //});
+ //               app.UseRatingMiddleware();
                 app.Use(async (context, next) =>
                 {
                     context.Response.GetTypedHeaders().CacheControl =
                         new Microsoft.Net.Http.Headers.CacheControlHeaderValue()
                         {
                             Public = true,
-                            MaxAge = TimeSpan.FromSeconds(10)
+                            MaxAge = TimeSpan.FromSeconds(20)
                         };
                     context.Response.Headers[Microsoft.Net.Http.Headers.HeaderNames.Vary] =
                         new string[] { "Accept-Encoding" };

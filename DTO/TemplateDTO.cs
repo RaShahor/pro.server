@@ -14,7 +14,7 @@ namespace DTO
         public string description { get; set; }
         public int numOfSigners { get; set; }
         public int numOfSigns { get; set; }
-        public int owner { get; set; }
+        public string owner { get; set; }
         public ICollection<Entities.Sign> signs { get; set; }
     }
 }

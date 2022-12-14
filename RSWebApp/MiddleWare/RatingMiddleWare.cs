@@ -18,13 +18,13 @@ namespace RSWebApp.MiddleWare
             _next = next;
         }
 
-        public async Task Invoke(HttpContext httpContext, SignContext schoolBusContext)
+        public async Task Invoke(HttpContext httpContext, SignContext _signContext)
         {
 
 
             Rating r = new Rating { Host = httpContext.Request.Host.ToString(), RecordDate = DateTime.Now, Method = httpContext.Request.Method, Path = httpContext.Request.Path, UserAgent = httpContext.Request.Headers["UserAgent"] };
-            await schoolBusContext.Ratings.AddAsync(r);
-            await schoolBusContext.SaveChangesAsync();
+            await _signContext.Ratings.AddAsync(r);
+            await _signContext.SaveChangesAsync();
             await _next(httpContext);
         }
     }

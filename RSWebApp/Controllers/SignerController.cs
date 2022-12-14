@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Aspose.Pdf;
 
 using Entities;
-using BL;
+//using BL;
 using DTO;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -18,8 +18,8 @@ namespace RSWebApp.Controllers
     
     public class SignerController : ControllerBase
     {
-        private ISignerBl _signerBL;
-        public SignerController(ISignerBl sbl)
+        private BL.ISignerBl _signerBL;
+        public SignerController(BL.ISignerBl sbl)
         {
             _signerBL = sbl;
         }

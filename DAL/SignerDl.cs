@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -52,7 +52,7 @@ namespace DAL
             myContext.SaveChanges();
             return pwd;
         }
-
+        
         public DateTime getPassTime(string mail)
         {
             DateTime dt = (DateTime)myContext.Signers.Where(s => s.Person.Mail == mail).FirstOrDefault().PassTime;

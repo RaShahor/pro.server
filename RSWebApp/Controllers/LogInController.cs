@@ -16,12 +16,12 @@ namespace RSWebApp.Controllers
     public class LogInController : ControllerBase
     {
         readonly IlogInBL logBL;
-        readonly IToken tokenService;
+        //readonly IToken tokenService;
 
-        public LogInController(IlogInBL logBL, IToken token)
+        public LogInController(IlogInBL logBL)
         {
             this.logBL = logBL;
-            tokenService = token;
+            //tokenService = token;, IToken token
         }
         // GET: api/<SecretaryController>
         //[HttpGet]
