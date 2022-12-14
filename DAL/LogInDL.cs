@@ -27,11 +27,11 @@ namespace DAL
         {
             return await myContext.Users.ToListAsync();
         }
-        public async Task<User> PostExistingUser(string email, string pwd)
+        public async Task<User> PostExistingUser(string email)
         {
-            User p = await myContext.Users.Where(x => x.Person.Mail == email && x.Person.Password == pwd).Include(x => x.Person).
+            User p = await myContext.Users.Where(x => x.Person.Mail == email ).Include(x => x.Person).
             FirstAsync();
-            if (CompareHash(pwd,p.Person.Password.to,p.Person.Salt)
+            
             return p;
 
         }
@@ -43,41 +43,70 @@ namespace DAL
             string[] res = { u.Person.Password, u.Person.Salt };
             return res;
         }
-        public string HashPassword(string password, string salt, int nIterations, int nHash)
-        {
-            var saltBytes = Convert.FromBase64String(salt);
-            //Iteration count is the number of times an operation is performed
-            using (var rfc2898DeriveBytes = new Rfc2898DeriveBytes(password, saltBytes, nIterations))
-            {
-                return Convert.ToBase64String(rfc2898DeriveBytes.GetBytes(nHash));
-            }
-        }
+       
 
-        public static byte[] GetHash(string password, string salt)
+        public static string GetHash(string password, string salt)
         {
             byte[] unhashedBytes = Encoding.Unicode.GetBytes(String.Concat(salt, password));
 
             SHA256Managed sha256 = new SHA256Managed();
             byte[] hashedBytes = sha256.ComputeHash(unhashedBytes);
 
-            return hashedBytes;
+            return hashedBytes.ToString();
         }
 
-        private static bool CompareHash(string attemptedPassword, byte[] hash, string salt)
-        //is password after hashing with salt the same as user`s hash in DB?
-        {
-            string base64Hash = Convert.ToBase64String(hash);
-            string base64AttemptedHash = Convert.ToBase64String(GetHash(attemptedPassword, salt));
+        //private static bool CompareHash(string attemptedPassword, byte[] hash, string salt)
+        ////is password after hashing with salt the same as user`s hash in DB?
+        //{
+        //    string base64Hash = Convert.ToBase64String(hash);
+        //    string base64AttemptedHash = Convert.ToBase64String(GetHash(attemptedPassword, salt));
 
-            return base64Hash == base64AttemptedHash;
-        }
+        //    return base64Hash == base64AttemptedHash;
+        //}
         public async Task<User> PostNewUser(User user)
         {
+            user.Person.Salt = generateSalt();
+            user.Person.Password = hash(user.Person.Password, user.Person.Salt);
             await myContext.People.AddAsync(user.Person);
             await myContext.Users.AddAsync(user);
             await myContext.SaveChangesAsync();
             //await?
             return user;
+        }
+        public static string hash(string psw, string salt, int nIterations = 20, int nHash = 4)
+        {
+            char[]tmp = psw.ToCharArray();
+            byte[] tmp1 = new byte[tmp.Length];
+            int i = 0;
+            foreach( char c in tmp)
+            {
+                tmp1[i++] = ((byte)c);
+            }
+            char[]tmp4 = salt.ToCharArray();
+            byte[] tmp2 = new byte[tmp4.Length];
+            i = 0;
+            foreach (char c in tmp4)
+            {
+                tmp2[i++] = ((byte)c);
+            }
+            //var saltBytes = Convert.FromHexString(salt);
+            //Iteration count is the number of times an operation is performed
+            using (var rfc2898DeriveBytes = new Rfc2898DeriveBytes(tmp1, tmp2, nIterations))
+            {
+                return Convert.ToBase64String(rfc2898DeriveBytes.GetBytes(nHash));
+            }
+
+        }
+        private string generateSalt()
+        {
+            string salt = "";
+            Random rnd = new Random();
+            for (int i = 0; i < 10; i++)
+            {
+                salt += (char)(rnd.Next(97,123));
+            }
+           
+            return salt;
         }
 
         public async Task<User> PutUser(string email, User user)

@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Entities;
 using DAL;
+using System.Security.Cryptography;
+
 namespace BL
 {
     public class LogInBL:IlogInBL
@@ -16,10 +18,13 @@ namespace BL
         }
         public async Task<User> postUser(string email, string psw)
         {
-            User u=
-            return await ILogIn.PostExistingUser(email, psw);
+            User u=await ILogIn.PostExistingUser(email);
+            if (Support.compareHashed(u.Person.Password, psw, u.Person.Salt))
+                return u;
+            return null;
         }
 
+      
 
         public async Task<User> postUser(User user)
         {
