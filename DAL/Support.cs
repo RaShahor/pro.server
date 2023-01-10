@@ -11,18 +11,18 @@ namespace DAL
     public static class Support
         
     {
-        
+        static readonly int LEN = 10;
         public static bool compareHashed(string password, string psw, string salt)
         {
-            string hashed = hash(psw, salt);
-            int[ , ] trial=new int[3,4];
-            int x = trial.Length;
+            string hashed = GetHash(psw, salt);
             if (hashed == password)
                 return true;
             return false;
         }
         public static string GetHash(string password, string salt)
         {
+            salt = salt.TrimEnd();
+            int ctr = Encoding.Unicode.GetByteCount(String.Concat(salt, password));
             byte[] unhashedBytes = Encoding.Unicode.GetBytes(String.Concat(salt, password));
 
             SHA512Managed sha512 = new SHA512Managed();
