@@ -4,19 +4,32 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using DAL;
 
-namespace BL
+namespace DAL
 {
     public static class Support
+        
     {
-        internal static bool compareHashed(string password, string psw, string salt)
+        
+        public static bool compareHashed(string password, string psw, string salt)
         {
-            string hashed = DAL.LogInDL.GetHash(psw, salt);
+            string hashed = hash(psw, salt);
+            int[ , ] trial=new int[3,4];
+            int x = trial.Length;
             if (hashed == password)
                 return true;
             return false;
         }
+        public static string GetHash(string password, string salt)
+        {
+            byte[] unhashedBytes = Encoding.Unicode.GetBytes(String.Concat(salt, password));
 
+            SHA512Managed sha512 = new SHA512Managed();
+            byte[] hashedBytes = sha512.ComputeHash(unhashedBytes);
+            string hashed_string = Encoding.ASCII.GetString(hashedBytes);
+            return hashed_string;
+        }
         private static string hash(string psw, string salt, int nIterations = 20, int nHash = 4)
         {
 

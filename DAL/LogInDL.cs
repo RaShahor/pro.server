@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Security.Cryptography;
 
+
 namespace DAL
 {
     public class LogInDL : ILogInDL
@@ -45,15 +46,7 @@ namespace DAL
         }
        
 
-        public static string GetHash(string password, string salt)
-        {
-            byte[] unhashedBytes = Encoding.Unicode.GetBytes(String.Concat(salt, password));
-
-            SHA256Managed sha256 = new SHA256Managed();
-            byte[] hashedBytes = sha256.ComputeHash(unhashedBytes);
-
-            return hashedBytes.ToString();
-        }
+        
 
         //private static bool CompareHash(string attemptedPassword, byte[] hash, string salt)
         ////is password after hashing with salt the same as user`s hash in DB?
@@ -66,7 +59,7 @@ namespace DAL
         public async Task<User> PostNewUser(User user)
         {
             user.Person.Salt = generateSalt();
-            user.Person.Password = hash(user.Person.Password, user.Person.Salt);
+            user.Person.Password = Support.GetHash(user.Person.Password, user.Person.Salt);
             await myContext.People.AddAsync(user.Person);
             await myContext.Users.AddAsync(user);
             await myContext.SaveChangesAsync();
@@ -113,7 +106,7 @@ namespace DAL
         {
             //I deleted another update option
             await myContext.Users.Update(user).GetDatabaseValuesAsync();
-            myContext.SaveChangesAsync();
+            await myContext.SaveChangesAsync();
             return user;
         }
 

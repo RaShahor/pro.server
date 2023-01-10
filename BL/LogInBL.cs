@@ -7,11 +7,17 @@ using Entities;
 using DAL;
 using System.Security.Cryptography;
 
+using Aspose.Pdf.Facades;
+
 namespace BL
 {
     public class LogInBL:IlogInBL
     {
         ILogInDL ILogIn;
+        const int iterations=10000;
+        const byte keySize = 64;
+        HashAlgorithmName hashAlgorithm = HashAlgorithmName.SHA512;
+
         public  LogInBL(ILogInDL iLogIn)
         {
             this.ILogIn = iLogIn;
@@ -43,9 +49,28 @@ namespace BL
             await ILogIn.PutUser(mail, curUser);
         }
 
+
+
         //Task<List<User> >IlogInBL.GetUser(string mail, string password)
         //{
         //    throw new NotImplementedException();
         //}
+      
+        //string HashPasword(string password, out byte[] salt)
+        //{
+        //    salt = RandomNumberGenerator.GetBytes(keySize);
+        //    var hash = Rfc2898DeriveBytes.Pbkdf2(
+        //        Encoding.UTF8.GetBytes(password),
+        //        salt,
+        //        iterations,
+        //        hashAlgorithm,
+        //        keySize);
+        //    return Convert.ToHexString(hash);
+        //}
+//        bool VerifyPassword(string password, string hash, byte[] salt)
+//{
+//            var hashToCompare = Rfc2898DeriveBytes.Pbkdf2(password, salt, iterations, hashAlgorithm, keySize);
+//            return hashToCompare.SequenceEqual(Convert.FromHexString(hash));
+//        }
     }
 }
