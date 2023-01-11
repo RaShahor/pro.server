@@ -20,6 +20,9 @@ using DAL;
 using BL;
 using Middleware;
 using RSWebApp.MiddleWare;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace RSWebApp
 {
@@ -40,6 +43,22 @@ namespace RSWebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var key = Encoding.ASCII.GetBytes(Configuration["JWT:key"]);
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+             {
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                 };
+              });
             services.AddAutoMapper(typeof(Startup));
             services.AddDbContext<SignContext>(option => option.UseSqlServer
             (Configuration.GetConnectionString("MyPc")));
@@ -98,6 +117,9 @@ namespace RSWebApp
 
                 app.UseStaticFiles();
                 app.UseRouting();
+                app.UseRatingMiddleware(1);
+                app.UseAuthentication();
+                app.UseAuthorization();
                 app.UseCors(options =>
                 {
                     options.WithOrigins("http://localhost:4200");
@@ -107,7 +129,7 @@ namespace RSWebApp
                 
                 //app.UseHttpsRedirection();
                 app.UseCSPMiddleware();
-
+                app.UseRatingMiddleware();
                 app.UseResponseCaching();
                 //app.Use(async (context, next) =>
                 //{
@@ -117,7 +139,7 @@ namespace RSWebApp
                 //        "image-src 'self'");
                 //    await next();
                 //});
- //               app.UseRatingMiddleware();
+                
                 app.Use(async (context, next) =>
                 {
                     context.Response.GetTypedHeaders().CacheControl =

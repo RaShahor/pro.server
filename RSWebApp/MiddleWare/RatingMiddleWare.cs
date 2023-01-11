@@ -12,17 +12,18 @@ namespace RSWebApp.MiddleWare
     public class RatingMiddleWare
     {
         private readonly RequestDelegate _next;
-
-        public RatingMiddleWare(RequestDelegate next)
+        protected static int _mode;
+        public RatingMiddleWare(RequestDelegate next,int mo)
         {
             _next = next;
+            _mode = mo;
         }
 
         public async Task Invoke(HttpContext httpContext, SignContext _signContext)
         {
 
-
-            Rating r = new Rating { Host = httpContext.Request.Host.ToString(), RecordDate = DateTime.Now, Method = httpContext.Request.Method, Path = httpContext.Request.Path, UserAgent = httpContext.Request.Headers["UserAgent"] };
+            
+            Rating r = new Rating { Host = httpContext.Request.Host.ToString(), RecordDate = DateTime.Now.AddYears(_mode), Method = httpContext.Request.Method, Path = httpContext.Request.Path, UserAgent = httpContext.Request.Headers["UserAgent"] };
             await _signContext.Ratings.AddAsync(r);
             await _signContext.SaveChangesAsync();
             await _next(httpContext);
@@ -32,9 +33,10 @@ namespace RSWebApp.MiddleWare
     // Extension method used to add the middleware to the HTTP request pipeline.
     public static class RatingMiddlewareExtensions
     {
-        public static IApplicationBuilder UseRatingMiddleware(this IApplicationBuilder builder)
+        public static IApplicationBuilder UseRatingMiddleware(this IApplicationBuilder builder,int mode=0)
         {
-            return builder.UseMiddleware<RatingMiddleWare>();
+            
+            return builder.UseMiddleware<RatingMiddleWare>(mode);
         }
     }
 }

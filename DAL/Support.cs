@@ -22,12 +22,18 @@ namespace DAL
         public static string GetHash(string password, string salt)
         {
             salt = salt.TrimEnd();
-            int ctr = Encoding.Unicode.GetByteCount(String.Concat(salt, password));
+            //int ctr = Encoding.Unicode.GetByteCount(String.Concat(salt, password));
             byte[] unhashedBytes = Encoding.Unicode.GetBytes(String.Concat(salt, password));
 
             SHA512Managed sha512 = new SHA512Managed();
             byte[] hashedBytes = sha512.ComputeHash(unhashedBytes);
             string hashed_string = Encoding.ASCII.GetString(hashedBytes);
+            //byte[] unhashedBytes = Encoding.Unicode.GetBytes(String.Concat(salt, password));
+            //byte[] unhashedBytes = Encoding.UTF8.GetBytes(String.Concat(salt, password));
+
+            //SHA512Managed sha512 = new SHA512Managed();
+            //byte[] hashedBytes = sha512.ComputeHash(unhashedBytes);
+            //string hashed_string = Convert.ToBase64String(hashedBytes);
             return hashed_string;
         }
         private static string hash(string psw, string salt, int nIterations = 20, int nHash = 4)
